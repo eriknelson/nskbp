@@ -21,6 +21,8 @@
     "react-dom": "^15.2.1"
   },
   "devDependencies": {
-    "webpack": "^1.13.1"
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.12.1"
   }
 }
