@@ -1,0 +1,19 @@
+{
+  "name": "nskbp",
+  "version": "1.0.0",
+  "description": "\"Minimal React + HMR starter\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eriknelson/nskbp.git"
+  },
+  "author": "Erik Nelson <erik@nsk.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eriknelson/nskbp/issues"
+  },
+  "homepage": "https://github.com/eriknelson/nskbp#readme"
+}
