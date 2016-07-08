@@ -4,6 +4,7 @@
   "description": "\"Minimal React + HMR starter\"",
   "main": "index.js",
   "scripts": {
+    "start": "node dev_srv.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +22,7 @@
     "react-dom": "^15.2.1"
   },
   "devDependencies": {
+    "express": "^4.14.0",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.1"
