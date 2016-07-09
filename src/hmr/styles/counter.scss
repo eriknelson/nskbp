@@ -1,6 +1,11 @@
 @import "config/colors";
 
 .counter {
-  border: solid 5px $pastel-blue;
+  border: solid 5px $pastel-green;
   padding: 15px;
+  color: $cb-light-text;
+  text-align: center;
+  width: 300px;
+  margin: 0 auto;
+  font-size: 3em;
 }

@@ -1,9 +1,7 @@
 import * as React from 'react';
 
 import NskNav from './NskNav';
-import Hello from '../../content/components/Hello'
-import Counter from '../../hmr/components/Counter'
-
+import Content from '../../content/components/Content';
 import '../styles/layout.scss';
 
 class Layout extends React.Component {
@@ -14,9 +12,8 @@ class Layout extends React.Component {
     return (
       <div className="layout">
         <NskNav />
-        <div className="wrapper">
-          <Hello message="derp" />
-          <Counter />
+        <div className="container">
+          <Content />
         </div>
       </div>
     );
