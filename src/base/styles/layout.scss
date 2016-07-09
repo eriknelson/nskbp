@@ -1,0 +1,13 @@
+@import "config/colors";
+
+body {
+  background-color: $cb-bg;
+  color: $cb-light-text;
+}
+
+.wrapper {
+  width: 500px;
+  margin: 0 auto;
+  padding: 15px;
+  border: solid 5px $cb-accent;
+}
