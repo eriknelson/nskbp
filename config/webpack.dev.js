@@ -2,22 +2,28 @@ const webpack = require('webpack');
 const path = require('path');
 
 const projRoot = path.join(__dirname, '..');
-const srcDir = path.join(projRoot, 'src');
+const srcRoot = path.join(projRoot, 'src');
 const buildDir = path.join(projRoot, 'build');
+const sharedStylesDir = path.join(srcRoot, 'shared', 'styles');
 
-const wpConfig= {
+const wpConfig = {
   debug: true,
-  devtool: 'sourcemap',
+  devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    path.join(srcDir, 'App')
+    path.join(srcRoot, 'App')
   ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loaders: ['babel'],
-        include: srcDir
+        include: srcRoot
+      },
+      {
+        test: /\.scss$/,
+        loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
+        include: srcRoot
       }
     ]
   },
@@ -26,7 +32,7 @@ const wpConfig= {
     path: buildDir,
     // http://stackoverflow.com/questions/28846814/what-does-publicpath-in-webpack-do
     // WP needs to know where the generated bundle will be hosted so it can request
-    // bhucnks or references files loaded with certain loaders.
+    // chunks or references files loaded with certain loaders.
     publicPath: '/public/'
   },
   plugins: [
@@ -34,8 +40,11 @@ const wpConfig= {
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
-    root: srcDir,
-    extensions: ['', '.jsx', '.js',]
+    root: srcRoot,
+    extensions: ['', '.jsx', '.js']
+  },
+  sassLoader: {
+    includePaths: [sharedStylesDir]
   }
 };
 
