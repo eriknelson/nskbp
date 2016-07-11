@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Jumbotron } from 'react-bootstrap';
 
-import Counter from '../../hmr/components/Counter'
+import Counter from '../../widgets/components/Counter'
 import Hello from './Hello'
 
 import '../styles/content.scss';
