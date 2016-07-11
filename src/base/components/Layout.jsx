@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import NskNav from './NskNav';
-import Content from '../../content/components/Content';
+import Home from '../../content/components/Home';
 import '../styles/layout.scss';
 
 class Layout extends React.Component {
@@ -13,7 +13,7 @@ class Layout extends React.Component {
       <div className="layout">
         <NskNav />
         <div className="container">
-          <Content />
+          <Home />
         </div>
       </div>
     );
