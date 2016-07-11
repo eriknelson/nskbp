@@ -11,7 +11,7 @@ const wpConfig = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    path.join(srcRoot, 'App')
+    path.join(srcRoot, 'Main')
   ],
   module: {
     loaders: [
