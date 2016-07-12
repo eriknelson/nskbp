@@ -18,7 +18,8 @@ const wpConfig = {
       {
         test: /\.jsx?$/,
         loaders: ['babel'],
-        include: srcRoot
+        include: srcRoot,
+        exclude: /test.*spec.js$/
       },
       {
         test: /\.scss$/,
