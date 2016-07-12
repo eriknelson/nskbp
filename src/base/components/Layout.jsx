@@ -1,20 +1,17 @@
 import * as React from 'react';
 
 import NskNav from './NskNav';
-import Home from '../../content/components/Home';
 import '../styles/layout.scss';
 
-class Layout extends React.Component {
-  render() {
-    return (
-      <div className="layout">
-        <NskNav />
-        <div className="container">
-          <Home />
-        </div>
+const Layout = ({children}) => {
+  return (
+    <div className="layout">
+      <NskNav />
+      <div className="container">
+        {children}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Layout;

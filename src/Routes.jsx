@@ -2,14 +2,17 @@ import React from 'react';
 import {
   Router, Route, IndexRoute, hashHistory
 } from 'react-router';
+
 import IntroPage from './auth/components/IntroPage';
-import Layout from './base/components/Layout';
+import HomePage from './content/components/HomePage';
+import DnsPage from './dns/components/DnsPage';
 
 const Routes = () => {
   return (
     <Router history={hashHistory}>
       <Route path="/" component={IntroPage} />
-      <Route path="/home" component={Layout} />
+      <Route path="/home" component={HomePage} />
+      <Route path="/dns" component={DnsPage} />
     </Router>
   );
 };
