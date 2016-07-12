@@ -6,18 +6,18 @@ import promiseMiddleware from 'redux-promise-middleware';
 import { Provider } from 'react-redux';
 import Layout from './base/components/Layout';
 import rootReducer from './rootReducer';
+import Routes from './Routes';
 
 const store = createStore(
   rootReducer,
   applyMiddleware(promiseMiddleware(), loggerMiddleware())
 );
 
-const app =
-  <Provider store={store}>
-    <Layout />
-  </Provider>
-
 const mountPoint = document.getElementById('main');
 
-
-ReactDOM.render(app, mountPoint);
+ReactDOM.render(
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
+  mountPoint
+);
