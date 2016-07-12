@@ -17,6 +17,9 @@ class Layout extends React.Component {
       1000
     );
   }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
   increment() {
     this.setState({
       count: this.state.count + 1
