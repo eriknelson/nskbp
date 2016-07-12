@@ -5,9 +5,6 @@ import Home from '../../content/components/Home';
 import '../styles/layout.scss';
 
 class Layout extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <div className="layout">
