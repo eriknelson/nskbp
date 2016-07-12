@@ -1,5 +1,5 @@
 import axios from 'axios';
-import api from '../shared/api';
+import { getResourceUrl } from '../shared/api';
 
 const actionTypes = {
   LOAD_DNS: 'dns.LOAD_DNS',
@@ -13,7 +13,7 @@ const actions = {
   loadDns: () => {
     return {
       type: actionTypes.LOAD_DNS,
-      payload: axios(api.getResourceUrl('dns'))
+      payload: axios(getResourceUrl('dns'))
     }
   },
   toggleVisible: () => {
