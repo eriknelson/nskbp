@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Jumbotron } from 'react-bootstrap';
 
-import Counter from '../../hmr/components/Counter'
-import Hello from './Hello'
+import Counter from '../../widgets/components/Counter'
+import Dns from '../../dns/components/Dns';
 
-import '../styles/content.scss';
+import '../styles/home.scss';
 
-class Content extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+class Home extends React.Component {
   render() {
     return (
       <div>
@@ -17,10 +14,10 @@ class Content extends React.Component {
           <h1>NSK Boilerplate</h1>
           <p>React | Webpack | HMR | React Bootstrap</p>
         </Jumbotron>
-        <Counter />
+        <Dns />
       </div>
     );
   }
 }
 
-export default Content;
+export default Home;

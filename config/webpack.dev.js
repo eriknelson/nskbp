@@ -11,14 +11,15 @@ const wpConfig = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    path.join(srcRoot, 'App')
+    path.join(srcRoot, 'Main')
   ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         loaders: ['babel'],
-        include: srcRoot
+        include: srcRoot,
+        exclude: /test.*spec.js$/
       },
       {
         test: /\.scss$/,
@@ -28,7 +29,7 @@ const wpConfig = {
     ]
   },
   output: {
-    filename: 'app.js',
+    filename: 'nskbp.js',
     path: buildDir,
     // http://stackoverflow.com/questions/28846814/what-does-publicpath-in-webpack-do
     // WP needs to know where the generated bundle will be hosted so it can request

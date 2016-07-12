@@ -2,4 +2,4 @@
 
 A minimal React boilerplate:
 
-React | Webpack | HMR | React Bootstrap
+React | Redux | Webpack | HMR | React Bootstrap | React Router

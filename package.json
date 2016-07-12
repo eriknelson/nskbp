@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node dev_srv.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha ./src/**/*.spec.js --compilers js:babel-core/register",
+    "test:dev": "mocha ./src/**/*.spec.js --compilers js:babel-core/register --watch"
   },
   "repository": {
     "type": "git",
@@ -18,10 +19,7 @@
   },
   "homepage": "https://github.com/eriknelson/nskbp#readme",
   "dependencies": {
-    "react": "^15.2.1",
-    "react-dom": "^15.2.1"
-  },
-  "devDependencies": {
+    "axios": "^0.12.0",
     "babel-core": "^6.10.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-react-transform": "^2.0.2",
@@ -30,15 +28,28 @@
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
     "express": "^4.14.0",
+    "immutable": "^3.8.1",
     "node-sass": "^3.8.0",
+    "nsk-reducer": "git+https://github.com/eriknelson/nsk-reducer.git",
+    "react": "^15.2.1",
     "react-bootstrap": "^0.29.5",
+    "react-dom": "^15.2.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.5.2",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.10",
+    "redux": "^3.5.2",
+    "redux-logger": "^2.6.1",
+    "redux-promise-middleware": "^3.3.2",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
   }
 }
