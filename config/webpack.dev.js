@@ -25,6 +25,10 @@ const wpConfig = {
         test: /\.scss$/,
         loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
         include: srcRoot
+      },
+      {
+        test:/\.json$/,
+        loader: 'json'
       }
     ]
   },
