@@ -54,15 +54,7 @@ app.get('/', (req, res) => {
 
 const apiRoutes = express.Router();
 
-apiRoutes.get('/dns', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(dns));
-});
-
-apiRoutes.get('/users', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(db.get('1')));
-});
+// Unauthenticated login route
 
 apiRoutes.post('/login', (req, res) => {
   // Query database for user. If founds, issue successful token, else, fail
@@ -87,6 +79,43 @@ apiRoutes.post('/login', (req, res) => {
   }).catch(_ => {
     loginFailed(res);
   });
+});
+
+// Authenticated routes
+
+apiRoutes.use((req, res, next) => {
+  // Check header or url params or post params for token
+  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+  if(token) {
+    // Verify secret and checks expiry
+    jwt.verify(token, jwtsalt, (err, decoded) => {
+      if(err) {
+        res.status(403);
+        return res.json({success: false, message: 'invalid token'});
+      } else {
+        // Save token to request so it's avialable in other routes
+        req.token = token;
+        next();
+      }
+    });
+  } else {
+    // No token, return forbidden error
+    return res.status(403).send({
+      success: false,
+      message: 'no access token found'
+    });
+  }
+});
+
+apiRoutes.get('/users', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(db.get('1')));
+});
+
+apiRoutes.get('/dns', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(dns));
 });
 
 app.use('/api/v1', apiRoutes);
