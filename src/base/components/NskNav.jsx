@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { PropTypes } from 'react';
 import {
   Navbar,
   Nav,
@@ -6,27 +6,58 @@ import {
   NavDropdown,
   MenuItem
 } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
+import { connect } from 'react-redux';
 
-import { Link } from 'react-router';
+class NskNav extends React.Component {
+  render() {
+    const { isSignedIn } = this.props;
 
-const NskNav = () => {
-  return (
-    <Navbar>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <Link to="/">NSKBP</Link>
-        </Navbar.Brand>
-      </Navbar.Header>
+    const authNav = ['home', 'dns'];
+    let links = ['about'];
+    if(isSignedIn) {
+      links = links.concat(authNav);
+    }
+
+    const nav = (
       <Nav>
-        <NavItem eventKey={1} href="#">
-          <span><Link to="/home">Home</Link></span>
-        </NavItem>
-        <NavItem eventKey={2} href="#">
-          <span><Link to="/dns">DNS</Link></span>
-        </NavItem>
+        {
+          links.map((link, idx) => {
+            return (
+              <LinkContainer key={link} to={`/${link}`}>
+                <NavItem eventKey={idx} href="#">
+                  {link.toUpperCase()}
+                </NavItem>
+              </LinkContainer>
+            )
+          })
+        }
       </Nav>
-    </Navbar>
-  );
+    );
+
+    return (
+      <Navbar>
+        <LinkContainer style={{'cursor': 'pointer'}} to='/'>
+          <Navbar.Header>
+              <Navbar.Brand>
+                NSKBP
+              </Navbar.Brand>
+          </Navbar.Header>
+        </LinkContainer>
+        {nav}
+      </Navbar>
+    );
+  }
 };
 
-export default NskNav;
+NskNav.propTypes = {
+  isSignedIn: PropTypes.bool.isRequired
+};
+
+export default connect(
+  (state) => {
+    return {
+      isSignedIn: state.auth.getIn(['user', 'isSignedIn'])
+    };
+  }
+)(NskNav);

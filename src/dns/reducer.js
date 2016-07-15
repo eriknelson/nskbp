@@ -6,19 +6,19 @@ const Imm = Immutable, ImmMap = Immutable.Map;
 
 const defaultState = Imm.fromJS({
   model: [],
-  app: {
+  ui: {
     entriesVisible: true
   }
 });
 
 const handlers = ImmMap({
   [actionTypes.LOAD_DNS_FULFILLED]: (state, action) => {
-    return state.set('model', Imm.fromJS(action.payload.data));
+    return state.set('model', Imm.fromJS(action.payload));
   },
   [actionTypes.TOGGLE_VISIBLE]: (state, action) => {
-    const entriesPath = ['app', 'entriesVisible'];
-    const newVal = !state.getIn(entriesPath);
-    return state.setIn(entriesPath, newVal);
+    const entriesPath = ['ui', 'entriesVisible'];
+    const newFilter = !state.getIn(entriesPath);
+    return state.setIn(entriesPath, newFilter);
   }
 });
 
