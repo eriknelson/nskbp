@@ -5,6 +5,7 @@ const config = require('./config/webpack.dev');
 
 const app = express();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const compiler = webpack(config);
 const port = process.env.PORT || 3000;
@@ -41,6 +42,8 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(cookieParser());
+
 // Logging
 app.use(morgan('dev'));
 
@@ -49,6 +52,7 @@ app.use(morgan('dev'));
 ////////////////////////////////////////////////////////////
 
 app.get('/', (req, res) => {
+  const user = db.get('1');
   res.sendFile(path.join(__dirname, 'templates', 'index.html'));
 });
 
@@ -56,7 +60,7 @@ const apiRoutes = express.Router();
 
 // Unauthenticated login route
 
-apiRoutes.post('/login', (req, res) => {
+apiRoutes.post('/auth/sign_in', (req, res) => {
   // Query database for user. If founds, issue successful token, else, fail
   queryForUserEmail(req.body.email).then(user => {
     // Password verify
@@ -65,27 +69,44 @@ apiRoutes.post('/login', (req, res) => {
     if(user.password !== proposedHash) {
       loginFailed(res);
     } else { // Successful login! Create token
-
-      const token = jwt.sign(user, jwtsalt, {
-        expiresIn: '1d'
-      });
-
-      res.status(200);
-      res.json({
-        success: true,
-        token: token
-      });
+      res.json(setNewToken(res, user, jwtsalt));
     }
   }).catch(_ => {
     loginFailed(res);
   });
 });
 
+apiRoutes.get('/auth/validate_token', (req, res) => {
+  const token = req.headers['access-token'];
+
+  if(token) {
+    jwt.verify(token, jwtsalt, (err, decoded) => {
+      if(err) {
+        res.status(403);
+        res.json({success: false, message: 'invalid token'});
+      } else {
+        // Save token to request so it's avialable in other routes
+        req.token = token;
+        const user = db.get(parseInt(decoded.id));
+        res.json(setNewToken(res, user, jwtsalt));
+      }
+    });
+  } else {
+    res.json({success: false, message: 'no token found'});
+  }
+});
+
 // Authenticated routes
+
+
+apiRoutes.get('/users', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(db.get('1')));
+});
 
 apiRoutes.use((req, res, next) => {
   // Check header or url params or post params for token
-  const token = req.body.token || req.query.token || req.headers['x-access-token'];
+  const token = req.header('access-token');
 
   if(token) {
     // Verify secret and checks expiry
@@ -96,6 +117,8 @@ apiRoutes.use((req, res, next) => {
       } else {
         // Save token to request so it's avialable in other routes
         req.token = token;
+        const user = db.get(parseInt(decoded.id));
+        setNewToken(res, user, jwtsalt);
         next();
       }
     });
@@ -106,11 +129,6 @@ apiRoutes.use((req, res, next) => {
       message: 'no access token found'
     });
   }
-});
-
-apiRoutes.get('/users', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(db.get('1')));
 });
 
 apiRoutes.get('/dns', (req, res) => {
@@ -140,4 +158,31 @@ function queryForUserEmail(email) {
 function loginFailed(res) {
   res.status(401);
   res.json({success: false, message: 'login failed'});
+}
+
+function setNewToken(res, user, jwtsalt) {
+  const secday= (24*60*60);
+  const token = jwt.sign(user, jwtsalt, {
+    expiresIn: secday
+  });
+
+  res.status(200);
+
+  const expiry = (Date.now() + secday).toString();
+  const clientToken = 'a3f5b6ba-cfe2-4a04-9ef6-72e8c0d2781f';
+
+  res.set({
+    'access-token': token,
+    'client': clientToken,
+    'expiry': expiry,
+    'uid': user.id
+  });
+
+  return {
+    data: {
+      'uid': user.id,
+      'provider': 'email',
+      'email': user.email
+    }
+  };
 }

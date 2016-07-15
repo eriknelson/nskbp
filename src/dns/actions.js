@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { getResourceUrl } from '../shared/api';
+import { fetch } from 'redux-auth';
 
 const actionTypes = {
   LOAD_DNS: 'dns.LOAD_DNS',
@@ -13,7 +13,7 @@ const actions = {
   loadDns: () => {
     return {
       type: actionTypes.LOAD_DNS,
-      payload: axios(getResourceUrl('dns'))
+      payload: fetch(getResourceUrl('dns')).then(res => res.json())
     }
   },
   toggleVisible: () => {
