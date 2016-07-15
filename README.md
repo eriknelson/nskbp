@@ -1,5 +1,3 @@
 # NSKBP
 
-A minimal React boilerplate:
-
-React | Redux | Webpack | HMR | React Bootstrap | React Router
+Personal React/Redux based demo stack, including auth
