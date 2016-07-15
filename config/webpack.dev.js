@@ -11,7 +11,7 @@ const wpConfig = {
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    path.join(srcRoot, 'Main')
+    path.join(srcRoot, 'main')
   ],
   module: {
     loaders: [
@@ -45,8 +45,7 @@ const wpConfig = {
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
-    root: srcRoot,
-    extensions: ['', '.jsx', '.js']
+    extensions: ['', '.jsx', '.js', '.json']
   },
   sassLoader: {
     includePaths: [sharedStylesDir]
